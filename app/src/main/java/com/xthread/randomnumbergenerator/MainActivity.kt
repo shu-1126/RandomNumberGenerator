@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     ) {
 
                         Column(modifier = Modifier.padding(all = 16.dp),) {
-                            minTextField(
+                            MinTextField(
                                 value = min,
                                 onValueChange = {if (it.length <= 16) {
                                     min = it
@@ -64,7 +65,7 @@ class MainActivity : ComponentActivity() {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            maxTextField(
+                            MaxTextField(
                                 value = max,
                                 onValueChange = {if (it.length <= 16) {
                                     max = it
@@ -88,13 +89,16 @@ class MainActivity : ComponentActivity() {
 
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            Text(
-                                result,
-                                textAlign = TextAlign.Center,
-                                fontSize = 28.sp,
-                                modifier = Modifier.fillMaxWidth(),
-                                maxLines = 1
-                            )
+                            SelectionContainer() {
+                                Text(
+                                    result,
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 28.sp,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    maxLines = 1
+                                )
+                            }
+
 
                             Spacer(modifier = Modifier.height(8.dp))
 
@@ -118,7 +122,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun minTextField(
+fun MinTextField(
     value : String,
     onValueChange: (String) -> Unit,
     modifier: Modifier,
@@ -144,7 +148,7 @@ fun minTextField(
 }
 
 @Composable
-fun maxTextField(
+fun MaxTextField(
     value : String,
     onValueChange: (String) -> Unit,
     modifier: Modifier){
@@ -168,19 +172,19 @@ fun maxTextField(
 }
 
 
-
-fun getRandom(min:Int,max:Int) : Int {
-    val range = (min..max)
-    return range.random()
-}
-
-@Composable
-fun ResultText(
-    result: String,
-    modifier: Modifier = Modifier
-){
-    Text(text = result,modifier = Modifier)
-}
+//
+//fun getRandom(min:Int,max:Int) : Int {
+//    val range = (min..max)
+//    return range.random()
+//}
+//
+//@Composable
+//fun ResultText(
+//    result: String,
+//    modifier: Modifier = Modifier
+//){
+//    Text(text = result,modifier = Modifier)
+//}
 
 fun String.isValidLong() = toLongOrNull() != null
 
