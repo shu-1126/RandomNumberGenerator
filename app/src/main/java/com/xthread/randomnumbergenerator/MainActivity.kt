@@ -1,5 +1,6 @@
 package com.xthread.randomnumbergenerator
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -54,7 +55,10 @@ class MainActivity : ComponentActivity() {
                         contentAlignment = Alignment.Center
                     ) {
 
-                        Column(modifier = Modifier.padding(all = 16.dp),) {
+                        Column(
+                            modifier = Modifier.padding(all = 16.dp),
+                            verticalArrangement = Arrangement.Center
+                        ) {
                             MinTextField(
                                 value = min,
                                 onValueChange = {if (it.length <= 16) {
@@ -80,7 +84,6 @@ class MainActivity : ComponentActivity() {
                                 onClick = {
                                     val range: LongRange = (min.toLong()..max.toLong())
                                     result = range.random().toString()
-                                    clipboardManager.setText(AnnotatedString(result))
                                 },
                                 modifier = Modifier.fillMaxWidth(),
                             ) {
@@ -104,7 +107,10 @@ class MainActivity : ComponentActivity() {
 
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
-                                onClick = { result = clipboardManager.getText()?.text ?: "" }
+                                onClick = {
+                                    clipboardManager.setText(AnnotatedString(result))
+
+                                }
                             ) {
                                 Text(text = "Copy")
                             }
@@ -171,6 +177,8 @@ fun MaxTextField(
     )
 }
 
+fun Context.toast(message: CharSequence) =
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
 //
 //fun getRandom(min:Int,max:Int) : Int {
@@ -187,17 +195,3 @@ fun MaxTextField(
 //}
 
 fun String.isValidLong() = toLongOrNull() != null
-
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    RandomNumberGeneratorTheme {
-        Greeting("Android")
-    }
-}
